@@ -44,7 +44,6 @@ func step1(word string) (string, error){
 	R1 := ""
 	if p1 <= len(word) { R1 = word[p1:] }
 
-	//fmt.Println("->", R1, p1)
 	a := []string{"em", "ern", "er"}
 	b := []string{"e", "en", "es"}
 
@@ -105,7 +104,6 @@ func step3(word string) string {
 	c := []string{"lich", "heit"}
 	d := []string{"keit"}
 
-	fmt.Println(word, R1, R2)
 	for _, suffix := range a {
 		// On website they use R2
 		if strings.HasSuffix(R1, suffix){
