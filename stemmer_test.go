@@ -29,17 +29,34 @@ func TestStem(t *testing.T) {
 	}
 }
 
+func TestStem2(t *testing.T) {
+
+}
 
 func TestStemQuery(t *testing.T) {
-	fmt.Println("\n\n", "TEST StemQuery()", "\n")
-	queries := []string {
-		"ich will schnell abnehmen",
+	queries := []string{
 		"wie kann ich schnell abnehmen",
-		"welcher film läuft heute im kino",
-		"was ist die beste pizzaria in münchen",
-		"wie kann ich schnell abnehmen ohne sport zu machen",
 	}
 	for _, query := range queries {
 		fmt.Println(StemQuery(query))
 	}
 }
+
+//func TestStem2(t *testing.T) {
+//	word := "kätzchens"
+//	var err error
+//	word0, err := step0(word)
+//	if err != nil {log.Println(err)}
+//	fmt.Println(0, word0)
+//	word1, err := step1(word0)
+//	if err != nil {log.Println(err)}
+//	fmt.Println(1, word1)
+//	word2 := step2(word1)
+//	fmt.Println(2, word2)
+//	word3 := step3(word2)
+//	fmt.Println(3, word3)
+//	word4 := step4(word3)
+//	fmt.Println(4, word4)
+//	fmt.Println(word4)
+//}
+

@@ -3,6 +3,9 @@ package main
 import (
 	"strings"
 	"fmt"
+	"os"
+	"log"
+	"bufio"
 	"sort"
 	"regexp"
 )
@@ -13,6 +16,23 @@ const s_ending 	= 	"bdfghklmnrt"
 const st_ending	= 	"bdfghklmnt"
 
 var p1, p2, x int
+
+func ScanFile(path string) []string {
+	var tmp []string
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		tmp = append(tmp, strings.Split(scanner.Text(), " ")[0])
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return tmp
+}
 
 func step0(word string) (string, error) {
 	word = strings.TrimSpace(word)
@@ -184,16 +204,16 @@ func getR(word string) (int, int, error) {
 	//	}
 	//}
 	//if p1 == 0 || p1 >= len(word){
-	for i := 1; i<len(word); i++ {
-		prev, err := RuneAt(word, i-1)
-		if err != nil {return -1, -1, err}
-		pos, err := RuneAt(word, i)
-		if err != nil {return -1, -1, err}
-		if strings.ContainsRune(vowels, prev) && !strings.ContainsRune(vowels, pos) {
-			p1 = i+1
-			break
+		for i := 1; i<len(word); i++ {
+			prev, err := RuneAt(word, i-1)
+			if err != nil {return -1, -1, err}
+			pos, err := RuneAt(word, i)
+			if err != nil {return -1, -1, err}
+			if strings.ContainsRune(vowels, prev) && !strings.ContainsRune(vowels, pos) {
+				p1 = i+1
+				break
+			}
 		}
-	}
 	//}
 	for i := p1+1; i<len(word); i++ {
 		prev, err := RuneAt(word, i-1)

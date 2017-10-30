@@ -276,4 +276,5 @@ zur            |  zu + der
 zwar           |  indeed
 zwischen       |  between
 
-%20            |  SPACE
+%20
+
