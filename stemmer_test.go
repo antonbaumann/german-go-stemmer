@@ -2,29 +2,9 @@ package main
 
 import (
 	"testing"
-	"os"
-	"bufio"
-	"log"
 	"fmt"
 	"strings"
 )
-
-func ScanFile(path string) []string {
-	var tmp []string
-	file, err := os.Open(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		tmp = append(tmp,scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-	return tmp
-}
 
 
 func TestStem(t *testing.T) {
@@ -42,11 +22,24 @@ func TestStem(t *testing.T) {
 	}
 
 	for i, w := range words {
-		fmt.Printf("%-30s %-30s %-3t\n", w, stemmed[i], strings.EqualFold(correctly_stemmed[i], stemmed[i]))
-		//fmt.Println(w, stemmed[i], strings.EqualFold(correctly_stemmed[i], stemmed[i]))
+		fmt.Printf("%-25s %-20s %-3t\n", w, stemmed[i], strings.EqualFold(correctly_stemmed[i], stemmed[i]))
 		if !strings.EqualFold(correctly_stemmed[i], stemmed[i]) {
 			fmt.Println("! ", correctly_stemmed[i])
 		}
 	}
 }
 
+
+func TestStemQuery(t *testing.T) {
+	fmt.Println("\n\n", "TEST StemQuery()", "\n")
+	queries := []string {
+		"ich will schnell abnehmen",
+		"wie kann ich schnell abnehmen",
+		"welcher film läuft heute im kino",
+		"was ist die beste pizzaria in münchen",
+		"wie kann ich schnell abnehmen ohne sport zu machen",
+	}
+	for _, query := range queries {
+		fmt.Println(StemQuery(query))
+	}
+}

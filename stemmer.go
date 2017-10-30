@@ -3,6 +3,8 @@ package main
 import (
 	"strings"
 	"fmt"
+	"sort"
+	"regexp"
 )
 
 // äöü -> AOU so they can be represented as ascii chars
@@ -44,7 +46,6 @@ func step1(word string) (string, error){
 	R1 := ""
 	if p1 <= len(word) { R1 = word[p1:] }
 
-	//fmt.Println("->", R1, p1)
 	a := []string{"em", "ern", "er"}
 	b := []string{"e", "en", "es"}
 
@@ -105,7 +106,6 @@ func step3(word string) string {
 	c := []string{"lich", "heit"}
 	d := []string{"keit"}
 
-	fmt.Println(word, R1, R2)
 	for _, suffix := range a {
 		// On website they use R2
 		if strings.HasSuffix(R1, suffix){
@@ -184,16 +184,16 @@ func getR(word string) (int, int, error) {
 	//	}
 	//}
 	//if p1 == 0 || p1 >= len(word){
-		for i := 1; i<len(word); i++ {
-			prev, err := RuneAt(word, i-1)
-			if err != nil {return -1, -1, err}
-			pos, err := RuneAt(word, i)
-			if err != nil {return -1, -1, err}
-			if strings.ContainsRune(vowels, prev) && !strings.ContainsRune(vowels, pos) {
-				p1 = i+1
-				break
-			}
+	for i := 1; i<len(word); i++ {
+		prev, err := RuneAt(word, i-1)
+		if err != nil {return -1, -1, err}
+		pos, err := RuneAt(word, i)
+		if err != nil {return -1, -1, err}
+		if strings.ContainsRune(vowels, prev) && !strings.ContainsRune(vowels, pos) {
+			p1 = i+1
+			break
 		}
+	}
 	//}
 	for i := p1+1; i<len(word); i++ {
 		prev, err := RuneAt(word, i-1)
@@ -232,3 +232,20 @@ func Stem(word string) (string, error) {
 	return word, nil
 }
 
+func StemQuery(query string) (string, error) {
+	stopWords := ScanFile("txt/stop_words_de.txt")
+	sort.Strings(stopWords)
+	r := regexp.MustCompile("[^\\s]+")
+	words := r.FindAllString(query, -1)
+	var new_query = ""
+	for _, w := range words {
+		if stopWords[sort.SearchStrings(stopWords, w)] != w {
+			res, err := Stem(w)
+			if err != nil {
+				return "", err
+			}
+			new_query += res + " "
+		}
+	}
+	return strings.TrimSpace(new_query), nil
+}
