@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/antonbaumann/german-go-stemmer/workflows/Go/badge.svg)](https://github.com/antonbaumann/german-go-stemmer/actions?workflow=Go)
+[![Build Status](https://github.com/antonbaumann/german-go-stemmer/workflows/test/badge.svg)](https://github.com/antonbaumann/german-go-stemmer/actions?workflow=test)
 
 # German Go Stemmer
 An efficient implementation of the German stemming algorithm from [snowballstem.org](https://snowballstem.org/algorithms/german/stemmer.html) in Golang that does not need any dependency.
