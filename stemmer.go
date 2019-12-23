@@ -1,7 +1,7 @@
 package stemmer
 
 import (
-	"german-go-stemmer/lookup"
+	"github.com/antonbaumann/german-go-stemmer/lookup"
 	"regexp"
 	"strings"
 )
