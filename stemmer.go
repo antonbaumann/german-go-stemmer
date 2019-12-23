@@ -1,4 +1,4 @@
-package main
+package stemmer
 
 import (
 	"german-go-stemmer/lookup"
