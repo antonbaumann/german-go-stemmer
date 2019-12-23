@@ -2,8 +2,8 @@ package stemmer
 
 import (
 	"bufio"
-	"github.com/stretchr/testify/assert"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -14,8 +14,12 @@ type testSet struct {
 
 func TestStemQuery(t *testing.T) {
 	query := "wie wird das wetter  \t morgen in \nmünchen"
+	expected := "wett morg munch"
 	result := Stem(query)
-	assert.Equal(t, "wett morg munch", result)
+
+	if !strings.EqualFold(expected, result) {
+		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", expected, result)
+	}
 }
 
 func TestStemWords(t *testing.T) {
@@ -36,7 +40,11 @@ func TestStemWords(t *testing.T) {
 		t.Fail()
 	}
 
-	assert.Equal(t, expected, StemWords(words))
+	result := StemWords(words)
+
+	if !slicesEqual(expected, result) {
+		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", expected, result)
+	}
 }
 
 func TestStemWord(t *testing.T) {
@@ -64,7 +72,9 @@ func TestStemWord(t *testing.T) {
 
 	for _, test := range tests {
 		result := stem(test.value)
-		assert.Equal(t, test.expected, result)
+		if !strings.EqualFold(test.expected, result) {
+			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
+		}
 	}
 }
 
@@ -78,7 +88,9 @@ func TestStep1(t *testing.T) {
 	for _, test := range tests {
 		r1, _ := getRegions(test.value)
 		result := step1(test.value, r1)
-		assert.Equal(t, test.expected, result)
+		if !strings.EqualFold(test.expected, result) {
+			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
+		}
 	}
 }
 
@@ -89,7 +101,9 @@ func TestStep2(t *testing.T) {
 	for _, test := range tests {
 		r1, _ := getRegions(test.value)
 		result := step2(test.value, r1)
-		assert.Equal(t, test.expected, result)
+		if !strings.EqualFold(test.expected, result) {
+			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
+		}
 	}
 }
 
@@ -108,4 +122,16 @@ func readWordList(filePath string) ([]string, error) {
 	}
 
 	return words, nil
+}
+
+func slicesEqual(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if !strings.EqualFold(v, b[i]) {
+			return false
+		}
+	}
+	return true
 }
