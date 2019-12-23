@@ -1,17 +1,21 @@
 package lookup
 
+//IsStopWord returns true if word is a stop-word
 func IsStopWord(word string) bool {
 	return stopWords[word]
 }
 
+//IsVowel returns true if `c` is a vowel
 func IsVowel(c uint8) bool {
 	return vowels[c]
 }
 
+//IsSEnding returns true if `c` is a s-ending
 func IsSEnding(c uint8) bool {
 	return sEnding[c]
 }
 
+//IsStEnding returns true if `c` is a st-ending
 func IsStEnding(c uint8) bool {
 	return stEnding[c]
 }
