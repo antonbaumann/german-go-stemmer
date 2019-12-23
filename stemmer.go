@@ -133,9 +133,8 @@ func getRegion(word string, n int) int {
 		if lookup.IsVowel(word[i-1]) && !lookup.IsVowel(word[i]) {
 			if n == 0 {
 				return i + 1
-			} else {
-				n -= 1
 			}
+			n--
 		}
 	}
 
@@ -163,6 +162,8 @@ func stem(word string) string {
 	return word
 }
 
+// Stem stems a raw query
+// remove stop-words
 func Stem(query string) string {
 	r := regexp.MustCompile("[^\\s]+")
 	words := r.FindAllString(query, -1)
@@ -176,10 +177,12 @@ func Stem(query string) string {
 	return strings.Join(newQuery[:], " ")
 }
 
+// StemWord stems a single keyword
 func StemWord(word string) string {
 	return stem(word)
 }
 
+// StemWords stems a list of keywords
 func StemWords(words []string) []string {
 	stemmed := make([]string, len(words))
 	for i, v := range words {
