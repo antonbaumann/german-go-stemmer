@@ -1,4 +1,4 @@
-name: Go
+name: test
 on: [push]
 jobs:
 
@@ -28,4 +28,7 @@ jobs:
       run: go build -v .
     
     - name: Test
-      run: go test ./...
+      run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+
+    - name: Coverage
+      run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
