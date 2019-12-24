@@ -71,7 +71,7 @@ func TestStemWord(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := stem(test.value)
+		result := StemWord(test.value)
 		if !strings.EqualFold(test.expected, result) {
 			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
 		}
@@ -104,6 +104,17 @@ func TestStep2(t *testing.T) {
 		if !strings.EqualFold(test.expected, result) {
 			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
 		}
+	}
+}
+
+func TestGetRegionEmptyWord(t *testing.T) {
+	word := ""
+	r1, r2 := getRegions(word)
+	if r1 != 0 {
+		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", 0, r1)
+	}
+	if r2 != 0 {
+		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", 0, r2)
 	}
 }
 

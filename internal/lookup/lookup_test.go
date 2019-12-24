@@ -21,7 +21,7 @@ func TestIsVowelNegative(t *testing.T) {
 }
 
 func TestIsStopWordPositive(t *testing.T) {
-	stopWords := []string {
+	stopWords := []string{
 		"damit", "dann", "der", "derselbe", "manche",
 	}
 	for _, word := range stopWords {
@@ -32,7 +32,7 @@ func TestIsStopWordPositive(t *testing.T) {
 }
 
 func TestIsStopWordNegative(t *testing.T) {
-	stopWords := []string {
+	stopWords := []string{
 		"weithin", "wachsam", "umfassender",
 	}
 	for _, word := range stopWords {
