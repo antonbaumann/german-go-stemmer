@@ -3,6 +3,8 @@ package stemmer
 import (
 	"strings"
 	"testing"
+
+	"github.com/antonbaumann/german-go-stemmer/internal/util"
 )
 
 type testSet struct {
@@ -11,7 +13,7 @@ type testSet struct {
 }
 
 func BenchmarkStemWord(b *testing.B) {
-	words, err := readWordList("testdata/voc.txt")
+	words, err := util.ReadWordList("testdata/voc.txt")
 	if err != nil {
 		b.Error(err)
 		b.Fail()
@@ -25,7 +27,7 @@ func BenchmarkStemWord(b *testing.B) {
 }
 
 func BenchmarkStemQuery(b *testing.B) {
-	words, err := readWordList("testdata/voc.txt")
+	words, err := util.ReadWordList("testdata/voc.txt")
 	if err != nil {
 		b.Error(err)
 		b.Fail()
@@ -49,13 +51,13 @@ func TestStemQuery(t *testing.T) {
 }
 
 func TestStemWords(t *testing.T) {
-	words, err := readWordList("testdata/voc.txt")
+	words, err := util.ReadWordList("testdata/voc.txt")
 	if err != nil {
 		t.Error(err)
 		t.Fail()
 	}
 
-	expected, err := readWordList("testdata/stemmed.txt")
+	expected, err := util.ReadWordList("testdata/stemmed.txt")
 	if err != nil {
 		t.Error(err)
 		t.Fail()
@@ -68,19 +70,19 @@ func TestStemWords(t *testing.T) {
 
 	result := StemWords(words)
 
-	if !slicesEqual(expected, result) {
+	if !util.SlicesEqual(expected, result) {
 		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", expected, result)
 	}
 }
 
 func TestStemWord(t *testing.T) {
-	words, err := readWordList("testdata/voc.txt")
+	words, err := util.ReadWordList("testdata/voc.txt")
 	if err != nil {
 		t.Error(err)
 		t.Fail()
 	}
 
-	expected, err := readWordList("testdata/stemmed.txt")
+	expected, err := util.ReadWordList("testdata/stemmed.txt")
 	if err != nil {
 		t.Error(err)
 		t.Fail()
