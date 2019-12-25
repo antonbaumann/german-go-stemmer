@@ -1,4 +1,4 @@
-package stemmer
+package core
 
 import (
 	"fmt"
