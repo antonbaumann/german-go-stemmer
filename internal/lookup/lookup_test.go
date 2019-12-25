@@ -3,9 +3,9 @@ package lookup
 import "testing"
 
 func TestIsVowelPositive(t *testing.T) {
-	vowels := "aeiouyAOV"
+	vowels := "aeiouyAOVäöü"
 	for _, v := range vowels {
-		if !IsVowel(uint8(v)) {
+		if !IsVowel(v) {
 			t.Errorf("`%c` should be a vowel", v)
 		}
 	}
@@ -14,7 +14,7 @@ func TestIsVowelPositive(t *testing.T) {
 func TestIsVowelNegative(t *testing.T) {
 	consonants := "bcdfghjklmnpqrstvwxz"
 	for _, v := range consonants {
-		if IsVowel(uint8(v)) {
+		if IsVowel(v) {
 			t.Errorf("`%c` should not be a vowel", v)
 		}
 	}
@@ -45,7 +45,7 @@ func TestIsStopWordNegative(t *testing.T) {
 func TestIsSEndingPositive(t *testing.T) {
 	sEndings := "bdfghklmnrt"
 	for _, v := range sEndings {
-		if !IsSEnding(uint8(v)) {
+		if !IsSEnding(v) {
 			t.Errorf("`%c` should be a s-ending", v)
 		}
 	}
@@ -54,7 +54,7 @@ func TestIsSEndingPositive(t *testing.T) {
 func TestIsSEndingNegative(t *testing.T) {
 	sEndings := "aceijopqsuvwxyz"
 	for _, v := range sEndings {
-		if IsSEnding(uint8(v)) {
+		if IsSEnding(v) {
 			t.Errorf("`%c` should not be a s-ending", v)
 		}
 	}
@@ -63,7 +63,7 @@ func TestIsSEndingNegative(t *testing.T) {
 func TestIsStEndingPositive(t *testing.T) {
 	sEndings := "bdfghklmnt"
 	for _, v := range sEndings {
-		if !IsStEnding(uint8(v)) {
+		if !IsStEnding(v) {
 			t.Errorf("`%c` should be a st-ending", v)
 		}
 	}
@@ -72,7 +72,7 @@ func TestIsStEndingPositive(t *testing.T) {
 func TestIsStEndingNegative(t *testing.T) {
 	sEndings := "aceijopqrsuvwxyz"
 	for _, v := range sEndings {
-		if IsStEnding(uint8(v)) {
+		if IsStEnding(v) {
 			t.Errorf("`%c` should not be a s-ending", v)
 		}
 	}

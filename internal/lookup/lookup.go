@@ -6,22 +6,22 @@ func IsStopWord(word string) bool {
 }
 
 //IsVowel returns true if `c` is a vowel
-func IsVowel(c uint8) bool {
+func IsVowel(c rune) bool {
 	return vowels[c]
 }
 
 //IsSEnding returns true if `c` is a s-ending
-func IsSEnding(c uint8) bool {
+func IsSEnding(c rune) bool {
 	return sEnding[c]
 }
 
 //IsStEnding returns true if `c` is a st-ending
-func IsStEnding(c uint8) bool {
+func IsStEnding(c rune) bool {
 	return stEnding[c]
 }
 
 // äöü -> AOU so they can be represented as ascii chars
-var vowels = map[uint8]bool{
+var vowels = map[rune]bool{
 	'a': true,
 	'e': true,
 	'i': true,
@@ -31,9 +31,12 @@ var vowels = map[uint8]bool{
 	'A': true,
 	'O': true,
 	'V': true,
+	'ä': true,
+	'ö': true,
+	'ü': true,
 }
 
-var sEnding = map[uint8]bool{
+var sEnding = map[rune]bool{
 	'b': true,
 	'd': true,
 	'f': true,
@@ -47,7 +50,7 @@ var sEnding = map[uint8]bool{
 	't': true,
 }
 
-var stEnding = map[uint8]bool{
+var stEnding = map[rune]bool{
 	'b': true,
 	'd': true,
 	'f': true,
