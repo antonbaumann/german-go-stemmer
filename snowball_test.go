@@ -1,8 +1,6 @@
 package stemmer
 
 import (
-	"bufio"
-	"os"
 	"strings"
 	"testing"
 )
@@ -10,6 +8,34 @@ import (
 type testSet struct {
 	value    string
 	expected string
+}
+
+func BenchmarkStemWord(b *testing.B) {
+	words, err := readWordList("testdata/voc.txt")
+	if err != nil {
+		b.Error(err)
+		b.Fail()
+	}
+
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		_ = StemWord(words[i%len(words)])
+	}
+	b.StopTimer()
+}
+
+func BenchmarkStemQuery(b *testing.B) {
+	words, err := readWordList("testdata/voc.txt")
+	if err != nil {
+		b.Error(err)
+		b.Fail()
+	}
+
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		_ = Stem(words[i%len(words)])
+	}
+	b.StopTimer()
 }
 
 func TestStemQuery(t *testing.T) {
@@ -76,73 +102,4 @@ func TestStemWord(t *testing.T) {
 			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
 		}
 	}
-}
-
-func TestStep1(t *testing.T) {
-	tests := []testSet{
-		{"Ackern", "Ack"},
-		{"ackers", "acker"},
-		{"armes", "arm"},
-		{"bedUrfnissen", "bedUrfnis"},
-	}
-	for _, test := range tests {
-		r1, _ := getRegions(test.value)
-		result := step1(test.value, r1)
-		if !strings.EqualFold(test.expected, result) {
-			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
-		}
-	}
-}
-
-func TestStep2(t *testing.T) {
-	tests := []testSet{
-		{"derbst", "derb"},
-	}
-	for _, test := range tests {
-		r1, _ := getRegions(test.value)
-		result := step2(test.value, r1)
-		if !strings.EqualFold(test.expected, result) {
-			t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", test.expected, result)
-		}
-	}
-}
-
-func TestGetRegionEmptyWord(t *testing.T) {
-	word := ""
-	r1, r2 := getRegions(word)
-	if r1 != 0 {
-		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", 0, r1)
-	}
-	if r2 != 0 {
-		t.Errorf("test failed.\nexpected:\t %v\ngot:\t\t %v", 0, r2)
-	}
-}
-
-func readWordList(filePath string) ([]string, error) {
-	words := make([]string, 0)
-
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		words = append(words, scanner.Text())
-	}
-
-	return words, nil
-}
-
-func slicesEqual(a, b []string) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i, v := range a {
-		if !strings.EqualFold(v, b[i]) {
-			return false
-		}
-	}
-	return true
 }
