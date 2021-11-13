@@ -10,7 +10,7 @@ import (
 
 // Stem stems a raw query and removes stop-words
 func Stem(query string) string {
-	r := regexp.MustCompile("[^\\s]+")
+	r := regexp.MustCompile(`[^\s]+`)
 	words := r.FindAllString(query, -1)
 	newQuery := make([]string, 0, len(words))
 	for _, word := range words {
