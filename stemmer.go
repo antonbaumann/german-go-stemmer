@@ -19,7 +19,7 @@ func Stem(query string) string {
 			newQuery = append(newQuery, res)
 		}
 	}
-	return strings.Join(newQuery[:], " ")
+	return strings.Join(newQuery, " ")
 }
 
 // StemWord stems a single keyword
